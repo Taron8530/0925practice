@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: pink;
+            
+        }
+        .inputLine{
+            width: 500px;
+            height: 700px;
+            background-color: white;
+            border-radius: 50px;
+        }
+        .textArea{
+            margin-top: 50px;
+            width: 350px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        function clearInput(){
+            var putsElement = document.getElementById("guestBook");
+            putsElement.value = "";
+        }
+        function addItem(){
+            var newItem = document.createElement("div");
+            
+            newItem.innerHTML = document.getElementById("guestBook").value;
+            newItem.onclick = removeItem;
+
+            document.getElementById("list").appendChild(newItem);
+            saveList();
+        }
+        function removeItem(){
+            var lists = document.getElementById("list");
+            lists.removeChild(this);
+            saveList();
+        }
+        function saveList(){
+            localStorage.listValues = document.getElementById("list").innerHTML;
+        }
+        function loadList(){
+            var list = document.getElementById("list")
+            list.innerHTML = localStorage.listValues;
+            for(var i = 0 ;i < list.children.length;i++){
+                list.children[i].onclick = removeItem;
+            }
+        }
+    </script>
+    <center><label>My Page에 오신 것을 환영합니다!</label></center>
+    <center><p>방명록을 작성해주세요.</p></center>
+    <center><div class="inputLine">
+        <center><input type="text" class="textArea" id="guestBook"></center>
+        <center><input type="button" value="클릭" style="margin-top:10px;" onclick="addItem();"></center>
+        <center><div id="list" style="margin-top:10px;"></div></center>
+    </div></center>
+    <script>
+         if(localStorage.listValues){
+             loadList();
+         }
+    </script>
+</body>
+</html>
